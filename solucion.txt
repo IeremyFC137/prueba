@@ -1,0 +1,10 @@
+- perfil rendidor
+- perfil aprobador
+- perfil administrador
+
+- Datos generales
+- Datos personalizados
+
+app.rindegastos.com
+
+- 
