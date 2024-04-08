@@ -1,0 +1,324 @@
+Machine Learning: Field of study that gives computers the ability to learn without being explicitly programmed by Arthur Samuel (1959)
+
+- Supervised learning -> rapid advancements, used most in real-world applications
+- Unsupervised learning 
+- Recommender systems
+- Reinforcement learning
+
+Practical advice for applying learning algorithms
+
+Types of supervised learning algorithms: Regression and Classification
+
+Regression: predict a number from infinitely many possible outputs
+Classification: Predict a class or category from a finite number of possible outputs (classes or categories are synonyms and they mean "output")
+
+Unsupervised learning: find something interesting in unlabeled data, we call it unsupervised because we're not trying to supervise the algorithm to give some quote right answer for every input, instead, we asked the algorithm to figure out all by itself what's interesting or what patterns or structures that might be in this data
+
+Types of unsupervised learning algorithms: clustering, Anomaly Detection and Dimensionality Reduction
+
+Clustering: group similar data points together
+Anomaly detection: find unusual data points
+Dimensionality reduction: Compress data using fewer numbers
+
+Notation:
+Dataset: training set, data used to train the model
+x = "input" variable, feature
+y = "output" variable, target variable
+(x,y) = single training example
+(x(i), y(i)): i(th) training example
+f: hypothesis, function, it takes an input x and estiate a y, model
+feature -> model -> prediction
+y(hat): prediction, estimated y
+
+How to represent f?
+f_w,b(x) = wx +b : linear function, linear regression with one variable, univariate linear regression
+
+w,b: parameters
+
+Cost Function: it tkaes the prediction y hat and compares it to the target y by takin y hat minus y
+
+y(hat)(i)- y(i): error
+
+J(w,b) = 1/(2m)Sum_i=1_to_(m)(y(hat)(i)- y(i))(2) : squared error cost function
+
+Goal: minimize J(w,b) w, b
+
+Gradient Descent
+
+w = w - alpha*d/dw(J(w,b))
+b = b - alpha*d/db(J(w,b))
+
+alpha = learning rate
+
+simultaneously update w and b
+
+tmp_w = w - alpha*d/dw(J(w,b))
+tmp_b = b - alpha*d/db(J(w,b))
+
+w = tmp_w
+b = tmp_b
+
+If alpha is too small... Gradient descent may be slow
+If alpha is too large... Gradient descent may overshoot, never reach minimun or fail to converge, diverge
+
+Near a local miminum, derivative becomes smaller and update steps become smaller
+Can reach minimun without decreasing learning rate alpha
+
+Batch gradient descent
+
+Batch: Each step of gradient descent uses all the training examples
+
+x_j = j(th) feature
+n = number of features
+x(i)[vector] = features of i(th) training examples
+x_j(i)[vector] = value of feature j in i(th) training example
+
+f_(w,b)(x) = 0.1x_1 + 4x_2 + 10x_3 + -2x_4 + 80 (base price)
+
+w[vector] = [w1 w2 ... wn]
+b is a number
+x[vector] = [x1 x2 x3 .... xn]
+
+f_(w[vector],b)(x[vector]) = w[vector].x[vector] + b
+
+multiple linear regression
+
+vectorization
+
+modern numerical linear algebra libraries : numpy
+
+An alternative to gradient descent: Normal equation
+
+Feature scaling
+Mean normalization
+Z-score normalization
+
+x1 range [300 - 2000] w1 low
+x2 range [0 - 5] w2 great
+
+aim for about -1<= x_j <= 1 for each feature x_j
+
+Scatterplot
+
+#number of iterations (m)
+
+Learning curve: J(w,b) vs #iterations
+Automatic convengence test
+Let epsilon be 10(-3), if J(w,b) decreases by <= epsilon in one iteration, declare convergence.
+(found parameters w, b to get close to global minimum)
+
+si alpha es muy pequeño y aún así J crece indefinidamente, hay un error en el código
+
+regla x3 (0.001 0.003 0.01 0.03 0.1 0.3 1)
+
+
+Featuring engineering : using intuition to design new features, by transforming or combining original features
+
+f_(w,b)(x[vector]) = w1x1 + w2x2 + b
+area = frontage x depth
+
+set x3 = x1x2 (feature)
+
+f_(w,b)(x[vector]) = w1x1 + w2x2 + w3x3 + b
+
+
+Polynomial Regression
+Let's take the ideas of multiple linear regression and feature emgomeeromg to come up with a new algorithm called polynomial regression which will let you fit curves, non-linear funcions to your data.
+
+Logistic Algorithm
+Binary classification: y can only be one of two values
+
+threshold
+decision boundary
+ 
+sigmoid function = logistic function
+
+f_(w,b)(x[vector]) = g(w.x+b) = 1/(1+e(-wx+ b))
+
+probability that class is 1
+
+f_(w,b)(x[vector]) = P(y=1|x[vector];w,b) 
+
+Decision boundary
+
+z = w[vector].x[vector] + b = 0 (curve)
+
+z = w1x1(2) + w2x2(2) + b = 0 ->  x1(2) + x2(2) >= 1 -> y_hat = 1 and x1(2) + x2(2) < 1 -> y_hat = 0
+z = w1x1 + w2x2 + b = 0 
+
+the threshold must be as low as possible
+
+linear regression that uses squared error cost -> convex
+
+logistic regression that uses squared error cost -> not-convex
+
+it turns out that for logistic regression, this squared error cost fuction is not a good choice. Instead, there will be a different cost function that can make the cost function convex again
+
+L(f_(w[vector],b)(xi),yi) = {-log(f) if yi = 1 and -log(1-f) if yi = 0} [maximun likelihood estimation]
+
+Loss function: it measures how well we're doing one training example
+
+J(w,b) = 1/m SUM_from_1_to_m(L(f(w,b)(x),y))
+
+Why is the squared error cost not used in logistic regression?
+The non-linear nature of the model results in a “wiggly”, non-convex cost function with many potential local minima.
+
+overfitting and overfitting
+
+Regulization is going to help you regularize this overfitting problem and get your learning algorithms to work much better.
+
+high bias = underfit = does not fit the training set well
+
+generalization = fits training set pretty well = just right
+
+fits the training set extremely well = overfit = high variance
+
+if you have too many features like the fourth-order polynomial on the right, then the model may fit the training set well, but almost too well or overfit and have high variance. On the flip side if you have too few features, then in this example, like the one on the left, it underfits and has high bias
+
+- The number one tool you can use against overfitting is to get more training data. Now, getting more data isn't always an option.
+- Select features to include/exclude (feature selection), large values for wj -> eliminate feature -> small values for wj (keep)
+- Regularization
+- Regulization parameter (lambda)
+- Regulazation term
+
+lamda balances both goals, fit data and keep wj small
+
+train/dev/test
+end-to-en
+
+Neural Network and Desicion Trees
+Artificial Neural Network or Computer Neural Network
+Algorithms that try to mimic the brain
+
+Speech Recognizition -> Computer Vision -> Text (NLP)
+
+(Neurons): Cell Body + Nucleus + Axon + Dendrites 
+
+activation (a)
+a = f(x) = 1/(1+e(-(wx+b))) [probability of bing top seller]
+
+Layer: a layer is a grouping of neurons which takes as input the same or similar features, and that in turn outputs a few numbers together 
+
+input layer
+hidden layer: in a training set you get to observe both x and y, your data set tell you what is x and what is y, and so you get data that tells you what are the correct inputs and the correct outputs, but your dataset doesn't tell you what are the correct values for any activations.
+output layer
+activations: it refers to the degree that the biological neuron is sending a high output value or sending many electrical impulses to other neurons to the downstream from it.
+
+values -> activition values -> output values
+
+the way neural network is implemented in practice is each neuron in a certain layer, say this layer in the middle, will have access to every feature, to every value from the previous layer.
+
+x[vector] -> a[vector] -> a
+
+Architecture for neural network: when you're building your own neural network, one of the desicions you need to make is how many hidden layers do you want and how many neurons do you want each hidden layer to have
+
+Multi-layer perceptron
+
+Activations are hight level features
+
+Predict category 1 or 0 (yes/no)
+
+when counting layers, the input layer isn't included 
+
+sigmoid: activation function (example)
+
+the activation function is just that function that outputs these activation values.
+
+Types of algorithm: 
+- forward propagation
+- backward propagation or back propagation
+
+Tensorflow for implementing deep learning algorithms
+
+AI: ANI + AGI
+
+Model Training Steps
+1. Specify how to compute output given input x and parameter w,b (define model)
+2. Specify loss and cost
+3. Train on data to minimize
+
+Loss: logistic class also know as binary cross entropy
+
+Regression (predicting numbers and not categories)  mean squared error
+model.compile(loss = MeanSqueareError())
+
+Compute derivatives for gradient descent using "back propagation"
+
+Activation function: ReLU (Rectified Linear Unit)
+
+Linear Activation Function
+
+Softmax Activation Function
+
+Binary Classification -> Sigmoid
+Regression -> Linear Activation Function
+Regreession with non-negative values -> ReLU
+
+ReLU vs Sigmoid 
+- Rel is most common choice
+- Not flat
+- More efficient when computation 
+- faster learning
+
+When you have functions that are in a lot of places, gradient descent would be slow
+
+Don't use linear activations in hidden layers
+
+Multi-label Classification
+
+Softmax Regression Algorithm is a generalization of the Logistic Regression Algorithm 
+
+Softmax Layer, Softmax Activation Function
+
+Multi-layer classification problem: Utilizar mutiples redes neuronales para resolver cada salida
+
+Alternatively, train one neural network with three outputs
+
+Advanced Optimization: Adam Algorithm (Adaptive Moment Estimation)
+- Go faster - increase alpha (learning rate) automatically
+- Go slower - decrease alpha automatically
+Doesn't use just one alpha. It uses a different learning rates for every single parameter of your model.
+[wj] (10 elementos) y b: it has 11 alpha parameters
+
+If wj (or b) keeps moving in same direction, increase alpha_j
+If wj (or b) keeps oscilalting, reduce alpha_j
+
+Each neuron output is a function of all the activation outputs of the previous layer: Dense Layer
+
+Convolutional Layer: Each neuron only looks at part of the previous layer's outputs
+Why?
+- Faster computation
+- Need less training data (less prone to overfitting)
+
+EKG signals
+
+this is a convolutional layer because these units in this layer looks at only a limited window of the input.
+
+It turns out that with convolutional layers you have many architecture choices such as how big is the window of inputs that a single neuron should look at and how many neurons should each layer have and by choosing those architectural parameters effectively, you can build new versions of neural networks that can be even more effective than the dense layer for some applications.
+
+Transformer odel or LS TM model or Attention Model
+
+Evaluating model
+
+Structure Data vs Unstructure Data
+
+(x,y); x belongs to R(n_x), y belongs to {0,1}
+m training examples : {(x(1),y(1)),(x(2),y(2)),...,(x(m),y(m))}
+m_train and m_test
+
+X = [x(1) x(2) ...] n_x x m  -> X belongs to R(n_x x m)
+X.shape = (n_x,m)
+
+Y = [y(1) ... y(m)] -> R(1xm)
+Y.shape = (1,m)
+
+
+
+
+
+
+
+
+
+
+
