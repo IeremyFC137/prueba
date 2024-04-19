@@ -1,0 +1,41 @@
+DataSets CertCont:
+
+URL Pruebas
+http://bdserver01/CERTCON/Ingreso.asp
+Server Prueba: BDSERVER01
+BD Prueba: CERTCONT_GI
+
+User:  SVALENZUELA
+Clave: 4414CD27AVS@​
+
+
+Prod: Ruta de documentos scaneada de la red y referenciada de 
+Permiso: Acceso Lectura a 
+
+\\LIM-fs01\CERTCON\1.CONTRATOS --> http://lim-fs01/CERTCON/1.CONTRATOS
+\\LIM-fs01\CERTCON\2.ANEXOS --> http://lim-fs01/CERTCON/1.CONTRATOS
+\\LIM-fs01\CERTCON\3.CERTIFICADOS --> http://lim-fs01/CERTCON/1.CONTRATOS
+
+Ejemplo:
+
+http://lim-fs01/CERTCON/1.CONTRATOS/2022-2023/230100_CONTRATO_Programa_Rehabilitaci%C3%B3n_Mejoramiento_Aeropuerto_Chachapoyas.pdf --> APP
+
+file://lim-fs01/CERTCON/1.CONTRATOS/2022-2023/230100_CONTRATO_Programa_Rehabilitaci%C3%B3n_Mejoramiento_Aeropuerto_Chachapoyas.pdf --> FS
+
+E:\CERTCON\1.CONTRATOS\2022-2023\230100_CONTRATO_Programa_Rehabilitación_Mejoramiento_Aeropuerto_Chachapoyas.pdf --> unidad del servidor LIMFS-01
+
+BD
+H:\DTI\DESARROLLO\PROG_IF\AI_CESEL\CertCont\QueryListado
+
+XLS
+H:\DTI\DESARROLLO\PROG_IF\AI_CESEL\CertCont\Listado​_DS
+
+Adicionar 2 Sitios al archivo:
+
+Ejemplo
+
+URL Externa
+https://owa.cesel.com.pe:7005/contratos/233400/
+
+URL Interna
+http://lim-fe01:7000/contratos/233400
