@@ -1,0 +1,90 @@
+Threats and threat modeling
+To whom?
+- Application
+- Servers
+- Networks
+- Companies
+- Countries
+
+What?
+Botnets, Malwares, Attackers
+
+Threat: something that can cause a harm to you or some entity. Threats can be very subjective, it totally depends what is the target here.
+
+What is a threat modelling of an application?
+DevSecOps Stages: Threat Modelling
+Activity: 
+	- Explain and explore 
+	- Brainstorm threats 
+	- Prioritize and fix
+Question:
+	- What are you building?
+	- What can go wrong?
+	- What are you going to?
+Outcome: 
+	- A technical diagram
+	- A list of technical threats
+	- Priorised fixes added to backlog
+
+Threat modeling is, you will take the product or the project that you are working on. And you will ask some questions from yourself. So, for example, as you can see here:
+What are we building?
+What can go wrong?
+What are we going to do about it?
+
+The first part is identify the assets, the different components of your application.
+The second part is about the interactions 
+
+The main concept behind threat modeling is to first understand what we are building, to deconstruct it into smaller parts and then to see which component is susceptible to which threat
+
+There are a lot of models that are out there that we can follow to perform threat modelling
+
+STRIDE
+It is one of the most famous, it was proposed by Microsoft 
+- Spoofing identity
+- Tampering with data
+- Repudiation
+- Elevation of privilege
+- Denial of service
+- Information disclosure
+
+DREAD 
+- Demage
+- Reproductibility
+- Exploitability
+- Affected Users
+- Discoverability
+
+Threatspec: Continuos Threat Modelling
+- Allows engineers to capture the security context of the code they write
+- Dependent on developers
+
+When developers are adding more code into this project, at that time, we are tracking whatever threats that can be there.
+
+All of these is supposed to improve your design
+
+Automated Code Review
+- Scan the code for known mistakes, security issues and vulnerabilities
+- Efficient and scalable in comparison to Manual Code Review
+- Not to be confused with Peer Code review that is done to improve the code quality
+
+Automated code review is just to identify the mistakes and the security, aspect of things. It is not to see the quality of it. When we talk about the code review, especially the manual code review, which is done by the peers, you have multiple developers working on the project, once he tests it and it is ready to commit into the main branch, before that, it is a standard practice that the other peers, the manager will actually will take a look at the code and he will ty to understand the logic. He analyze the code in terms of its effectiveness, efficiency, readability (it is done to maintain the code quality)
+  
+Peer Code Review
+- Understanding the logic
+- Analyzing in terms of efficiency, effectiveness and readability
+- Suggest alternate if required
+
+Example: Both code blocks perform same operation but second one looks better and concise
+
+Security Code Review
+- Analyze against best security practices, secure coding guidelines and known issues
+- Suggest fixes
+
+Example:
+1. Passing user input directly into os.system() method
+2. Hardcoding AWS token or credentials in code
+
+How to perform ACR?
+DevSkim
+- Framework of IDE extensions and language anlyzers
+- perform analysis on the applications and reports the vulnerabilities
