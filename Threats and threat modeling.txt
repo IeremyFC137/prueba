@@ -88,3 +88,132 @@ How to perform ACR?
 DevSkim
 - Framework of IDE extensions and language anlyzers
 - perform analysis on the applications and reports the vulnerabilities
+
+Chef Inspec
+- Define compliance, security and policy requirements using script
+ 
+G (VSC) - J (JENKINS) - T (TOMCAT)
+
+Automating Compliance Check
+
+What about docker or kubernetes?
+How to make sure Docker environment or Kubernetes?
+Audit it
+Docker host
+- Docker bench
+- Dockscan
+- Amicontained
+
+Docker image
+- Docker linting 
+- Docker image vulnerability scanning
+
+Dockscan
+- Scans for security issues and vulnerabilities
+- Can scan local and remote docker
+
+Amicontained
+- Container introspection tool to find out container-runtime, apparmor, seccomp, capabilities information
+
+Dockerfile Linting
+- Dockerfile Linting is a process to check and modify the Dockerfile as per the industry's best practices
+- Tools to audit Dockerfiles for best practices and bad practices
+
+Dockerfilelint
+- Node module that analyzes a Dockerfile and looks for common traps, mistakes and helps enforce best practices
+
+CALIR
+- Static analyzer for finding vulnerabilities in application containers
+
+- Kube bench
+- Kube hunter
+
+DevSecOps Stages: Secret Management
+- Hardcoding secrests in deployed code is a bad idea
+- Keeping secrets in code base is also proven to be dangerous
+- Process of saving secrets in a secure storage service and accessing those whenever needed, is secrets management
+
+The secrets doesn't have to be managed from the code, they have to be managed by some other way. Secret Storage Services, they stores our secrets and our code can refer to this storage.
+
+Hashicorp Vault
+- open-source system to securely storing/accessing secrets
+- also supports encryption as a service
+
+But why Vault?
+- Moving secrets to one place (Vault)
+- Encrypted
+ . At rest
+ . In transit
+- Access Control is provided
+- Audit trail
+
+Efimeral Secrets: temporary secrets, issued with a expiry timeline
+
+But how Vault helps in application compromise
+
+- Temporary credentials to apps
+ . changes after some interval
+- Different tokens for every application/entity/user so easy to know point of compromise
+- Also, easy to revoke access selectively
+- Bad encryption prevented using Encryption as a service
+- Key management
+
+DevSecOps Stages: Vulnerabilitiy Management
+- Identifying the inventory
+- Using tools to perform security tests on the project to identify vulnerabilities and catalog the vulnerabilities
+- Tracking, patching/fixing the vulnerabilities 
+
+Archery
+- Opensource centralize vulnerability assessment and management for devsecops teams
+- Central point to arrange/list reports of other security tools
+
+Tracking, patching, managing all of these vulnerabilities, and all of this issue actually becomes a problem as soon as you try to scale up with the security tool 
+
+Gates means you have to meet some criteria to pass that phase, now these gates, if we use the term gates, will differ for all of these tools. For example, when we are using OWASP Dependency Check or if we are using some ACR tool, we can define which threshold we want to allow and threshold we don't want 
+
+GitHub
+- Hosted GIT repositories with access control
+- Free for public repositories and paid for private (after a limit)
+- Anyone can create account
+
+You want to have one controlling authority
+CI/CD Servers are for defining order
+The flow is defined by the user, and it is implemented by the CICD server.
+
+TRADITION CI/CD WITH GITHUB
+---------------------------
+DEVELOPER - CODE REPOSITORY - CI SERVER (PERFORM THE POOLING, YOU DEFINE THE TRIGGERS HERE) - IMAGE REGISTRY - DEPLOYMENT ON KUBERNETES
+ 
+CAN WE?
+DEVELOPER - CODE REPOSITORY/CI SERVER - DOCKER (IMAGE REGISTRY) - DEPLOYMENT ON KUBERNETES
+
+GitHub Actions
+- Automate software workflows
+- Build, test, and deploy
+- Code reviews, branch management, and issue
+
+How it works?
+Combination of GitHub Events (trigger) + Actions
+Events: An activity on Repo
+- Pull request
+- Commit
+- New contributor joining
+
+Actions: Defined by user in terms of workflows (collection of steps)
+
+For example, whenever something is being committed to the master branch, at that time, what I want is to run an action which will compile the code, build the code, package it and then deploy it
+
+Runner: it is the machine on which the build is going to run 
+
+.GitHub/workflows
+
+pre created action
+
+CI/CD: it only deals with building and deploying your software.
+Whereas these actions will even able to help you with some of the other actions that people perform on their GitHub repositories, for example, whenever a new ticket is issued or a new issue is created, you want to assign it to one of the contributors, right? So you can actually do that by using GitHub actions and feel free to explore these actions that are provided as default to learn more on it.
+
+Jobs in Jenkins, Stages in the GitLab GI actions or GitHub Actions
+
+So first thing is to create the DevSecOps pipeline because we are there yet. Once we have created it, after that, you can work on optimizing it, you can decide if you want to run all of the pipeline, all the time. Or if you only want to run a specific section, which is modified.
+Work on planning and developing and deploying the pipeline.
+
