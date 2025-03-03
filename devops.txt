@@ -1,0 +1,896 @@
+open source foundation
+repl: read, eval, print, loop
+
+globalThis: variale global de toda nuestra aplicación
+sistema clásico de modulos: commonJS
+
+globalThis es una variable global en toda nuestra app
+
+globalThis en node apunta a global y en el navegador apunta a window
+
+IIFE: Inmwediatly Invoked Function Expression
+
+- sincrono
+- asincrono de callback
+- asincrono secuencial
+- asincrono en paralelo
+
+REST API
+REST: es una arquitectura de software, no es un framework, no es una biblioteca. Se diseño para sistemas de comunicaciones en redes. Se utiliza para construir apps por eso se le llama REST API.
+
+Todas las arquitecturas de software responden a crear a base de ciertos principios un sistema que pueda sostenerse en el tiempo de la mejor forma posible y simplificar el desarrollo de esa pieza de software.
+
+PRINCIPIO DE REST:
+- Escalabilidad: 
+- Simplicidad
+- Visibilidad
+- Portabilidad
+- Fiabilidad
+- Facil de modificar
+
+Fundamentos de REST:
+- Resources: todo es considerado un recurso, cada recurso se va a identificar con una URL (entidades concretas o colecciones de entidades)
+- Verbos HTTP (métodos): para definir las operaciones que se pueden realizar con los recursos.
+- Representaciones: JSON, XML, HTML, etc. El cliente debería poder decidir la representación del recurso. el recurso debe estar separador de la representación.
+- Stateless: cada solicitud que el cliente hace al servidor debe tener toda la información necesaria para el servidor entienda esa solicitud. El servidor no debe mantener ningún estado sobre el cliente entre solicitudes.
+- Interfaz Uniforme: interfaz entre cliente servidor tiene que ser consistente y uniforme para todas las interacciones.
+- Separación de conceptos: los componentes de cliente y servidor están separados, ambos evolucionan de forma separada.
+
+Metodos normales: GET/HEAD/POST
+Metodos complejos: PUT/PATCH/DELETE
+
+El CORS PRE-Flight ocurre en los métodos complejos. Estos métodos requiren una petición especial OPTIONS que lo que hace es preguntar a la API, antes de hacer este put, patch o delete, cuentame... Petición previa.
+
+Problema de cabeceras : CORS.
+
+Middleware: CORS.
+
+¿QUÉ ES UN MIDDLEWARE?
+REQUEST ----> EXPRESS ----> RESPONSE
+Es una función o componente intermedio que intercepta y procesa solicitudes antes de que lleguen a la lógica principal de una aplicación o antes de enviar la respuesta al cliente.
+Se usa en muchos frameworks y tecnologías, como Express.js (Node.js), Django, FastAPI, Flask y Redux, para manejar autenticación, validación, registro de solicitudes y más.
+
+Características clave de un Middleware
+✔ Intermediario entre el cliente y el servidor → Puede modificar la solicitud o la respuesta antes de que lleguen a su destino.
+✔ Encadenable → Se pueden ejecutar múltiples middlewares en orden (pipeline).
+✔ Modularidad y reutilización → Separa la lógica común del código principal de la aplicación.
+✔ Soporte para síncrono y asíncrono → Algunos middlewares pueden ejecutarse en paralelo para optimizar el rendimiento.
+
+Podemos extraer cookies, validar si el usuario está validado, extraer la información del json, cualquier tipo de lógica.
+
+
+El servidor de desarrollo de Django (runserver) no es eficiente
+Es monohilo y solo maneja una solicitud a la vez, lo que genera cuellos de botella.
+No maneja múltiples conexiones concurrentes de manera eficiente.
+No está optimizado para la seguridad ni la gestión de procesos.
+No tiene funciones avanzadas como balanceo de carga o manejo de tráfico estático.
+
+Django necesita un WSGI (Web Server Gateway Interface) o un ASGI (Asynchronous Server Gateway Interface) para manejar múltiples solicitudes simultáneamente.
+
+Django no maneja: ✅ Balanceo de carga (distribuir tráfico entre múltiples servidores).
+✅ Caché de contenido estático (CSS, imágenes, JavaScript).
+✅ Optimización de rendimiento y seguridad a nivel de red.
+
+Por eso, Nginx o Apache se usan como servidores web frontales que reciben todas las solicitudes y las reparten eficientemente.
+
+Cliente (navegador) 
+     ↓
+Nginx (maneja tráfico, estáticos, balanceo)
+     ↓
+Gunicorn/uWSGI (maneja la aplicación Django)
+     ↓
+Django (procesa la lógica y base de datos)
+
+Beneficios de usar Nginx con Django
+✅ Mejor manejo de concurrencia: Nginx maneja miles de solicitudes simultáneas.
+✅ Caché de archivos estáticos: Sirve CSS, imágenes y JS sin cargar Django.
+✅ Balanceo de carga: Distribuye tráfico a varios servidores Django/Gunicorn.
+✅ Seguridad: Protege Django contra ataques de red, DDOS y permite HTTPS con SSL.
+
+Un servidor de aplicaciones como Gunicorn y un servidor web como Nginx cumplen roles diferentes en el despliegue de una aplicación:
+
+Gunicorn: Ejecuta la lógica de la aplicación, procesando peticiones y conectándose a bases de datos.
+Nginx: Se encarga de gestionar tráfico HTTP, servir archivos estáticos y distribuir peticiones a los servidores de aplicaciones.
+
+Event Loop inside Javacript
+----------------------------
+JavaScript is a single-threaded non-blocking asynchronous concurrent language.
+I have a call stack, an event loop, a callback queue and some other APIs and stuff.
+
+A runtime engine has a callback and a heap.
+
+Heap: where memory allocation happens
+Call Stack: where the stack frames are, it's a data structure which records basically where in the program we are, if we step into a function, we put something on to the stack, if we return form a function, we pop off the top of the stack. (de arriba hacia abajo)
+Web API: these are extra things that the browser provides (DOM, ajax, setTimeout...)
+Event Loop: it is the simplest little piece in this whole equation, and it has one very simple job, the event loop jop is to look at the stack and look at the task queue, if the stack is empty it takes the first thing on the queue and pushes it on the to the stack, which effectively runs it.
+Callback Queue (task queue): Every async code waits here.  
+
+Javascript has a one call stack == one thread == on thing at a time
+
+Blocking: it's code that is slow. Doing image processing, doing network processing. Image request.
+
+Concurrency & the Event Loop
+One thing at a time except not really.
+
+The reason we can do things concurrently is that the browser is more than just the Runtime. The browser gives us these other things, gives us these web APIs, these pieces of the browser are aware of this concurrency kicks in. If you're a BACKEND PERSON, esto es identico para Node, except instead of WEB APIs, we have C++ APIs. The threading is being hidden form you by C++
+
+Docker permite empaquetar aplicaciones para que funcionen igual en cualquier entorno.
+Docker Compose ayuda a levantar múltiples servicios en desarrollo y pequeñas implementaciones.
+Kubernetes es para manejar aplicaciones a gran escala, con balanceo de carga y autoescalado.
+Si el proyecto crece, la mejor opción sería migrar de Docker Compose a Kubernetes usando herramientas como K3s, Minikube o un servicio en la nube (EKS, AKS, GKE).
+
+Ejemplo de arquitectura con Kubernetes:
+
+Cliente (Navegador) --> Nginx (Ingress Controller) --> Kubernetes Cluster
+                          |
+                          ├── Pod 1: Django App (con Gunicorn/Uvicorn)
+                          ├── Pod 2: PostgreSQL Database
+                          ├── Pod 3: Redis (para caching)
+Validaciones, control de input, output, cómo se manejan las cosas.
+
+MVC: express es un framework que está diseño para ser utilizado con MVC, este último es un patrón de arquitectura. Te obliga a separar tu aplicación en tres componentes interconectados, esenciales y que separan las preocupaciones de tu aplicación. MOVEL / VIEW / CONTROLLER.
+
+Patrón de arquitectura: es un patrón para definir la arquitectura o estructura de toda tu aplicación, de cómo arquitecturas toda tu aplicación.
+Patrón de diseño: un patrón repetible, fácil de hacer par solucionar una cosa en concreto. Patrón repetible en una parte de tu código, por ejemplo, patrón observer, patrón factory o patrón módulos.
+
+MODELO: representa la lógica del negocio, la estructura de datos, las reglas que tiene el negocio de forma interna, el que se encarga de acceder a la base de datos, actualizar la información correctamente, ver si la integridad de los datos es correcta.
+CONTROLLER:  es el que actúa como un intermediario entre el modelo y la vista, que está respondiendo a las entradas del usuario, este se encarga de responder, ver y tratas las entradas del usuario, trabaja con el modelo. (el orquestador)
+VIEW: representar la interfaz que el usuario va a poder utilizar, presentar los datos, enviar las acciones, UI.
+
+El controlador inicia la vista, la vista usa el controlador, el controlador trabaja con el modelo para leer/modificar etc, y por ultimo el modelo envía los datos al controlador.
+
+Por qué una clase para definir modelos?
+Porque define un contrato, cuando lo pasemos a typescript nos a ayudar a tipar perfectamente como deben ser los modelos para ser intercambiables.
+
+SON COMO TRES CAJAS NEGRAS, CADA UNA HACE UNA COSA, PERO CADA UNA DE ELLAS NO SABE CÓMO LA HACE
+ESA ES LA CLAVE DEL MUNDO DE LA ARQUITECTURA Y EL CÓDIGO LIMPIO, SEPARACIÓN POR CAPAS, SEPARACIÓN DE CONCEPTOS. LAS CAPAS NO DEBEN SABER LA IMPLEMENTACIÓN POR DENTRO.
+
+CONTROLLER: qué es lo que renderiza.
+
+En cada capa se realiza validaciones.
+
+En el controlador generalmente se hacen validaciones de formato y coherencia los datos que hemos recibido, que se puedan procesar para antes de enviarlo al modelo. Si el campo es requerido, si el correo electrónico no tiene arroba, que el numero tiene un rango, etc.
+
+LAS OBLIGATORIAS SON LAS VALIDACIONES EN EL MODELO Y CONTROLADOR, LAS VALIDADICONES EN LA VISTA ES PARA MEJORAR LA EXPERIENCIA DEL USUARIO.
+
+Las validaciones que se hacen en el modelo son validaciones de regla de negocio, coherencia de datos relacionados sobre todo con la persistencia de los datos, si el campo es INTEGER es imposible que puedas meterle un cadena de caracteres, validación de existencia de una entidad, etc.
+
+Si se puede definir un método para validar en el modelo que se importe en el controlador, el controlador sería el que lo 'verifica', pero la implementación del método no se hace dentro del controlador si no dentro del modelo.
+
+SCRUM 
+
+## **GitHub Actions vs. GitLab CI/CD: ¿Cuál es la diferencia?**
+
+Tanto **GitHub Actions** como **GitLab CI/CD** son herramientas de **automatización y CI/CD (Integración Continua y Entrega/Despliegue Continuo)**, pero hay diferencias clave en su enfoque, funcionalidad y ecosistema.
+
+---
+
+## **📌 ¿Qué es GitHub Actions?**
+**GitHub Actions** es una herramienta de automatización integrada en GitHub que permite ejecutar **workflows** en respuesta a eventos como `push`, `pull_request` o `issues`.
+
+🔹 **Características principales**:
+- **Integrado en GitHub** → No necesitas configurar un servidor externo.  
+- **Basado en YAML** → Se configuran en el directorio `.github/workflows/`.  
+- **Eventos automáticos** → Se activan con eventos de GitHub como `push`, `PR`, `tag`, etc.  
+- **Marketplace de acciones** → Puedes reutilizar acciones creadas por la comunidad.  
+- **Ejecuta en runners de GitHub o auto-hosted** → Usa servidores en la nube de GitHub o en máquinas propias.  
+- **Buen soporte para proyectos Open Source** → GitHub ofrece minutos gratuitos para repositorios públicos.  
+
+💡 **Ejemplo de un workflow en GitHub Actions**:
+```yaml
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas
+        run: npm test
+```
+✅ **Ejecuta el workflow cuando se hace un `push` en la rama `main`**, instalando dependencias y ejecutando pruebas.
+
+---
+
+## **📌 ¿Qué es GitLab CI/CD?**
+**GitLab CI/CD** es el sistema de automatización integrado en GitLab que permite definir **pipelines** para compilar, probar y desplegar código.
+
+🔹 **Características principales**:
+- **Integrado en GitLab** → Funciona nativamente con GitLab sin necesidad de herramientas externas.  
+- **Basado en YAML** → Se configura en `.gitlab-ci.yml`.  
+- **Más flexible en runners** → Puedes usar los servidores de GitLab o runners auto-hospedados.  
+- **Integración con Kubernetes y Docker** → Ofrece una mejor integración con despliegues en contenedores.  
+- **Control total sobre pipelines** → Soporta fases (`stages`) más detalladas en los pipelines.  
+
+💡 **Ejemplo de un pipeline en GitLab CI/CD**:
+```yaml
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "Compilando el proyecto..."
+    - npm install
+
+test:
+  stage: test
+  script:
+    - npm test
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Desplegando la aplicación..."
+```
+✅ **Define un pipeline con las fases `build`, `test` y `deploy`** para ejecutar en GitLab.
+
+
+## **📌 ¿Cuál es mejor?**
+Depende de tu proyecto y necesidades:
+
+✅ **Usa GitHub Actions si...**
+- Tu código está en **GitHub** y quieres aprovechar su integración nativa.
+- Necesitas **automatizaciones rápidas** sin configurar servidores adicionales.
+- Quieres reutilizar **acciones del Marketplace** para evitar escribir código repetitivo.
+
+✅ **Usa GitLab CI/CD si...**
+- Tu código está en **GitLab** o necesitas más control sobre los pipelines.
+- Necesitas una **mejor integración con Docker, Kubernetes o runners auto-hospedados**.
+- Requieres **pipelines más detallados** y avanzados en el proceso de CI/CD.
+
+---
+
+## **📌 Conclusión**
+Ambas herramientas son **potentes soluciones de CI/CD**, pero **GitHub Actions** es mejor si trabajas en **GitHub** y buscas simplicidad, mientras que **GitLab CI/CD** es más **robusto y flexible** para proyectos más complejos o que requieren **integración con Kubernetes**.
+
+🔹 **¿Cuál elegir?** → Si usas GitHub, **GitHub Actions** es una opción natural. Si estás en GitLab o necesitas un CI/CD más avanzado, **GitLab CI/CD** es una mejor elección. 🚀
+
+📌 ¿Qué es PMI?
+PMI (Project Management Institute) es una organización que define estándares y mejores prácticas para la gestión de proyectos en cualquier industria, no solo en desarrollo de software. Su marco de referencia más famoso es el PMBOK (Project Management Body of Knowledge).
+
+ ¿Waterfall es PMI?
+No, pero Waterfall es una metodología de gestión de proyectos que sigue muchas prácticas promovidas por PMI.
+
+SDLC Methodologies
+------------------
+There are multiple methodologies when we talk about SDLC:
+- Waterfall model
+- Scrum
+- Extreme programming
+- DSDM
+- etc...
+
+Agile: it not a framework, it has multiple frameworks. Instead of creating the whole software in one go. Instead of creating a very heavy version one and then hit the market, agile actually pushes for the faster to the market time. Instead of waiting for us to put in features and then go to market, let's just create MVP, deploy it to the market and get user's feedback.
+
+[Sprint: design - build - test - review] - lunch -
+
+Conclusión
+Scrum organiza el desarrollo y DevOps agiliza la entrega. Juntos, crean un flujo de trabajo eficiente que permite desarrollar, probar y desplegar software de manera rápida y sin fricciones. 🚀
+
+¿Qué es DevOps?
+Es una cultura y conjunto de prácticas que unen el desarrollo (Dev) y las operaciones (Ops).
+Su objetivo es automatizar y agilizar el ciclo de vida del software, asegurando entregas rápidas y confiables.
+Se basa en la Integración Continua (CI) y la Entrega Continua (CD).
+Usa herramientas como Docker, Kubernetes, GitHub Actions, Jenkins, Terraform, Ansible, entre otras.
+
+How agile and DevOps are going to go hand in hand
+-------------------------------------------------
+Agile Dev + IT ops = DevOps
+- Disconnect in Dev and Ops team
+- Conventional models like waterfall and even modern agile models are not efficient.
+- Need fast iterations in developers, operations teams and customer.
+
+Operation teams: they are the ones who is going to deploy it, who is going to maintain it, manage it and monitor it.
+
+DevOps was needed to make sure that this disconnect between Dev and Ops is minimized or reduced completely.
+
+PLAN - CODE - BUILD - TEST - RELEASE - DEPLOY - OPERATE - MONITOR
+
+- In DevOps, we are going to consider the Dev as well as Ops teams both.
+- we want to automate most of the part, 
+
+Objectives
+- Improve efficiency and save money/time
+- Making Developers (Dev) and Operations (Ops) work together to achieve Continuous Integration and Continuos Delivery.
+
+CI
+DEVELOPERS [CHECK IN] - SOURCE REPOSITORY - CI SEVER [BUILD SYSTEM IS A MACHINE THAT TAKES THE CODE AND CONVERT IT INTO A DEPLOYABLE THING] + [BUILD - TEST - RESULT] - RESULT ...
+
+CD
+VERSION CONTROL - BUILD - TESTING AND STAGING - AUTO TEST - DEPLOYMENT
+it is delivered the latest created features frequently. You are not waiting for a whole site, but you are also deploying as soon as the code for that specific one feature is stable enough.
+
+When you do continuous integration and continuous delivery, this is called DevOps. The idea is to do everything in a continuous manner and automated manner. 
+
+DEVOPS PIPELINE
+PLAN - CODE - BUILD - TEST - RELEASE - DEPLOY - OPERATE - MONITOR
+
+In DevOps the feedback is coming from the both sides, it is coming from the customer because you are deploying everything on a continuous way, it is also coming from the engineers, from your internal developers, from you internal members.
+DevOps is more of a methodology, it does not come with frameworks.
+Agile is not going to focus a lot of on automation, whereas DevOps totally depends on automation.
+
+You can think of devops as a more improved thing over agile.
+
+Security checks we should consider during the security phase.
+
+git config --global user.email "test@tesuser.com"
+git config --global user.name "tester"
+
+DevOps Build:
+- Code is processed into deliverable package
+- Package can be a binary or modified code
+
+Build systems
+- Software used to transform source code into deliverable form
+- Depends on languages/platform used 
+GNU Make (C)
+Gradle 
+Maven (Java)
+Sbt
+
+In case of Java projects, we need a WAR archive that can be then deployed on the Tomcat server.
+
+mvn compile, mvn test, mvn package
+
+uni test are run for sanity checking
+
+Selecting the platform, selecting the language, selecting this build system relies on the developer
+
+DevOps Test:
+- Automated and manual tests performed
+- Bugs are reported to developers  for fixing
+- Different tools and techniques are used
+
+In DevOps you want most of it if not gone to be automated because if you are rolling all of these updates and if you are building on each code push right or each major code push then it will become very difficult.
+
+How you can test the whole project if it is not being built everyday. You cannot do it, you can do is create the sanity checks, create the main test, the usability test and then automate them.
+
+Test Systems
+- Se
+- JUnits
+- Pytest
+
+JUnit is a framework that is used for testing the project written in the java programming language.
+All test classes that match the following patterns:
+- **/Test*.java
+- **/*Test.java
+- **/*Test.java
+- **/*TestCase.java
+
+- @Test is used to denote that test case
+- These will be executed during the test phase (mvn test)
+
+El que hace el test tiene que saber como funciona internamente el software.
+
+Suppose you want to make sure that a web application that is there that you are deploying is bgeaving properly when it is deployed, you want to write good sanity checks for it, you want to write good usability checks for it. So what is where you can use a tool like Selenium for.
+- Selenium is an open-source web application testing framework for automating functional tests.
+- Selenium IDE is an IDE (Integrated development Environment) for Selenium tests. It is implemented as a Firefox/Chrome extension that allows a user to record, edit, and debug tests.
+- Selenium Python bindings allow to automate selenium interaction with Python code.
+
+DevOps stages: Deploymnet
+- Product is deployed using Infrastructure as Code (IaC)/automation tools
+- Deployment can be done on different platforms like: Cloud, On-premise machine
+- In different approaches like: containers, VMs, PaaS compatible files, Serverless.
+
+Serverless is kind of containers but there you don't have to keep the container running all the time, you don't have to manage it you just put the code or the image file and then as per requests it's launched or it is executed, so that actually helps a lot with you billing and scalability.
+
+You want to also prepare the machine on which you want to deploy it right, in devops you need to automate the process, that is where iac comes into play.
+
+IaC: you can define info, define the specifications using the code, it's more of the configuration file that will be used with iac tools to create that info.
+Ansible, Puppet, CHEF
+
+ANSIBLE: Storing provisioning, configuration management, and application-deployment IaC.
+Behind the scenes
+1. SSH into the host
+2. Pushing out small programs (i.e. Ansible modules)
+3. Executes these modules over SSH
+4. Removes modules
+
+Ansible: YAML File
+
+Step 1: define host
+ 	- hosts: test-server
+	  become: yes
+Step 2: Transfer files
+	tasks:
+	- name: Extracting Tomcat
+	  unarchive:
+	  src: /root/setup-files/apache-tomcat-0.123.tar.gz
+	  dest: /opt/
+Step 3: 
+Step 4:
+
+Docker Image:
+- Deployment on Docker swarms, Kubernetes
+- Docker Image: WebApp/Binary + Stack
+- Dockerfile: Instructions to create a Docker image
+
+Dockerfile - Docker Image - Docker Container 
+
+Docker file java webapp
+Kubernetes deployment
+
+FROM tomcat:9.0.37-jdk8-openjdk
+COPY src /tmp/src
+WORKDIR /tmp/src
+RUN apt update 
+	&& apt install -y maven
+
+RUN mvn package 
+ 	&& mv /tmp/src/target/mvn-hello-world.war /usr/local/tomcat/webapps/ROOT.war
+
+Dockerfile packaging java webapp
+FROM tomcat:9.0.37-jdk8-openjdk
+COPY ROOT.war /urs/local/tomcat/webapps/
+
+Build command:
+docker build -t devsecops/java:webapp
+
+Amazon Machine Image
+- Deployment on Amazon EC2 machines
+- Virtual machines images
+- Take a base image and put webapp/binary on it
+
+hashiCorp Packer
+Amazon EC2
+
+OCI standard: Open Container Initiative
+La Open Container Initiative (OCI) es un proyecto de la Linux Foundation que define estándares abiertos para contenedores, asegurando interoperabilidad entre herramientas y plataformas como Docker, Kubernetes, Podman, CRI-O, entre otras.
+
+AMI: Amazon Machine Images
+
+Docker registry
+
+DevOps: Operate and Monitor
+- Monitor the operational product
+- Report any issues to DevOps team
+
+Nagios or Prometheus.
+Prometheus is also supported by the Kubernetes out of the both most cases.
+
+Nagios:
+- Continuous monitoring of systems, applications, services, and business processes
+- Idea is to detect any issue early and work on fixing it
+- Monitoring local resources (e.g. CPU load, memory usage) and remote services (SMTP, POP3, HTTP, PING)
+
+NAGIOUS WEB INTERFACE (GUI) - NAGIOS PROCESS SCHEDULER - REMOTE RESOURCES OR SERVICEE
+
+Secure focus monitoring, source based monitoring, the last one is not looking for abuse, we are just looking for the performance based things. So it is also called longevity testing. So when you create something and you know, you keep it running for like 24 hours, 72 straight, seeing if there are any memory leaks, there are any issues with the code, you don't want to consume more resources because is it going to be deployed in like 1000 EC2s, it is going to cause a lot more billing to your company or organization.
+
+CI/CD Platform
+- Responsible for creating and executing the pipeline
+- Triggering different phases
+It is the heart of your DevOps pipeline and even in abstract devsecops pipeline, we can say the same.
+
+So to make sure that all of these devops stages are being done after one problem, all of those thing are taken care fo by the cicd platform
+
+The most famous one is the Jenkins, it comes with a lot of plugins, with a lot of support
+
+DevOps pipeline is a automated process flow using Continuos Integration server
+
+For example: a Jenkins server (for integrating all parts: building/testing project with maven, deploying with Ansible, and dynamic testing with Selenium)
+
+Headless mode
+
+GitLab Runners vs Jenkins
+
+Just as you can save the infrastructure in terms of your Ansible playbooks you can do the same for the Jenkins pipeline (Jenkins Pipeline as Code).
+
+Jenkinsfile: storing pipeline as code
+
+You can use UI of the Jenkins to define diffetent phases of the pipeline, but we can do the same using the code also.
+
+For that we will use jenkinsfile: it is just your Docker file, just like your Ansible playbook, or just like your YML files. It is a configuration file that Jenkins undertint to want to put the Jenkinnsfile to the Jenkins, then interpret it and create the pipeline on its own.
+
+DevOps and DevSecOps no hay un framework, es mas una forma de pensar y cultura que se construye.
+
+There is no standard documentation output
+
+Organization Cultural Change
+
+DevSecOps, security tools and scanners
+
+Most of our exercises, most of our setups are vulnerable by design
+
+Why DevOps is not sufficient when we are deploying?
+- How to take care of security?
+- Can't do pentests or security audits deaily
+
+So if we are talking about a pipeline which has to take care of security also, obviously you are going to need security, you normal pentests or normal security audits, suppose your pipeline is running once a day and you have a very big system, so it becomes very difficult to now perform a pentest or to do a security audit everyday
+Remember, the testing phase of a devops process is functional testing not security testing. When we release it if it's working fine we are happy. If your code is working fine it doesn't mean that it is working secure. That's the reason why we have to have security component in there.
+
+Software Security Development Process
+1. Requirements
+Security classification
+Risk assessment
+Security requirements
+2. Design
+Threat modeling
+Design review
+3. Development
+Secure coding guidelines
+Secure code scanning (e.g., in the build pipeline)
+4. Testing
+Security testing
+Code review
+5. Deployment
+Penetration testing (Pentesting)
+Security hardening
+Key Question:
+Can we automate this process so it can be done reliably and repeatedly?
+
+Adding security into the cycle of DevOps: DevSecOps
+
+Why DevSecOps?
+- Bugs/misconfiguration/mistakes will always be there
+- Traditional way of auditing products before deployment won't scale for Continous Delivery model
+- Need to automate security tests/scans to reduce mistakes and do it frequently
+- Define compliance and security checks in code
+- Catching security issues mistakes early
+
+There are going to be different places from development to deployment, where you can have misconfiguration vulnerabilities, bugs, right.
+
+Whenever you are changing something, it is going through our automated tool scanner, so we can catch issues earlier
+
+Objectives:
+- Improve efficiency and save money/time while taking care of security in all phases
+- Making Developers (Dev) and Operations (Ops) work together to achieve Continuous Integration and Continuous Delivery. At the same time, involving Security Team (Sec) in the process from very beginning.
+
+Dev - Sec - Ops
+
+Continuous Security
+
+DevSecOps Maturity Model (DSOMM)
+Helps in understanding:
+- Ho good/mature ios the current DevSecOps process
+- How to improve it
+
+Before you move to DevSecOps, obviously you are going to have a DevOps process ready
+
+Threats and threat modeling
+To whom?
+- Application
+- Servers
+- Networks
+- Companies
+- Countries
+
+What?
+Botnets, Malwares, Attackers
+
+Threat: something that can cause a harm to you or some entity. Threats can be very subjective, it totally depends what is the target here.
+
+What is a threat modelling of an application?
+DevSecOps Stages: Threat Modelling
+Activity: 
+	- Explain and explore 
+	- Brainstorm threats 
+	- Prioritize and fix
+Question:
+	- What are you building?
+	- What can go wrong?
+	- What are you going to?
+Outcome: 
+	- A technical diagram
+	- A list of technical threats
+	- Priorised fixes added to backlog
+
+Threat modeling is, you will take the product or the project that you are working on. And you will ask some questions from yourself. So, for example, as you can see here:
+What are we building?
+What can go wrong?
+What are we going to do about it?
+
+The first part is identify the assets, the different components of your application.
+The second part is about the interactions 
+
+The main concept behind threat modeling is to first understand what we are building, to deconstruct it into smaller parts and then to see which component is susceptible to which threat
+
+There are a lot of models that are out there that we can follow to perform threat modelling
+
+STRIDE
+It is one of the most famous, it was proposed by Microsoft 
+- Spoofing identity
+- Tampering with data
+- Repudiation
+- Elevation of privilege
+- Denial of service
+- Information disclosure
+
+DREAD 
+- Demage
+- Reproductibility
+- Exploitability
+- Affected Users
+- Discoverability
+
+Threat modelling has to improve your design.
+
+Threatspec: Continuos Threat Modelling
+- Allows engineers to capture the security context of the code they write
+- Dependent on developers
+
+When developers are adding more code into this project, at that time, we are tracking whatever threats that can be there.
+
+All of these is supposed to improve your design
+
+DevSecOps Stage: Automated Code Review
+- Scan the code for known mistakes, security issues and vulnerabilities
+- Efficient and scalable in comparison to Manual Code Review
+- Not to be confused with Peer Code review that is done to improve the code quality
+
+Automated code review is just to identify the mistakes and the security, aspect of things. It is not to see the quality of it. When we talk about the code review, especially the manual code review, which is done by the peers, you have multiple developers working on the project, once he tests it and it is ready to commit into the main branch, before that, it is a standard practice that the other peers, the manager will actually will take a look at the code and he will ty to understand the logic. He analyze the code in terms of its effectiveness, efficiency, readability (it is done to maintain the code quality)
+  
+Peer Code Review
+- Understanding the logic
+- Analyzing in terms of efficiency, effectiveness and readability
+- Suggest alternate if required
+
+Example: Both code blocks perform same operation but second one looks better and concise
+
+Security Code Review
+- Analyze against best security practices, secure coding guidelines and known issues
+- Suggest fixes
+
+Example:
+1. Passing user input directly into os.system() method
+2. Hardcoding AWS token or credentials in code
+
+How to perform ACR?
+DevSkim
+- Framework of IDE extensions and language anlyzers
+- perform analysis on the applications and reports the vulnerabilities
+
+The security team can't do on their own. They obviously need the help from the devops team also. They will need to work with the developers, with the operation team to make sure that they are understanding what they are trying to do, and accordingly they create the devsecops pipeline.
+
+PMD: Finding common vulnerabilities
+FubdSecBugs: Securing Java Applications
+
+DevSkim is actually working on regex so it doesn't depend on the language being used 
+
+DevSecOps Stage: Sensitive Information Scan
+- Scan the code for sensitive information (e.g. hardcoded password, tokens, secret keys etc) before pushing the code into code repositories
+- This makes sure that even if the code falls into wrong hands tomorrow, the sensitive information won't get exposed
+
+Trufflehog:
+- Searching sensitive information in git repositories
+- Checks code in the commit history, branches with regular expression
+- Open-source software
+(changes or delta in the main branch)
+
+Search for high entropy strings (Hashes/Tokens)
+
+DevSecOps Stages: SAST
+- Static Code Analysis aka Static Application Security Testing aka SAST
+- Identify the possible vulnerabilities or security issues in non-running source code by using techniques like Taint Analysis and Data Flow Analysis.
+
+SonarQube: it is used for code quality control, it is also used to handle the technical debt and also to perform the static code analysis.
+- Code quality control
+- Technical debt handling
+- Perform static code analysis
+- Open Source
+- Support 27 languages
+Code Quality Control
+The quality gate will make sure that your build, the code that you are processing, the code the is currently there is only passing if you have a certain, u know, quality standard
+
+Tecnical Debt
+
+DevSecOps Stages: DAST
+- Dynamic Application Security Testing aka DAST
+- Identity the possible runtime vulnerable security issue
+- Performed on a running project
+
+
+DAST with OWASP Zap
+
+DevSecOps Pipeline:
+Automated process flow using Continuous Integration along with security tools:
+
+DevSecOps Stages: Software Composition Analysis
+- OWASP TOP 10 2013: A9-USING COMPONENTS WITH KNOWN VULNERABILITIES
+- OWASP 10 TEN
+- THE UNFORTUNATE REALITY OF INSECURE LIBRARIES
+- PERFORMED TO IDENTIFY THE DEPENDENCY PACKAGE/LIBRARIES FOR THE PROJECT AND CHECK THOSE AGAINST KNOWN VULNERABILITIY DBs
+
+OWASP Dependency Check 
+- Open source software composition analysis
+- Detects publicly disclosed vulnerabilities in application dependencies
+- Available as 
+ . Command line interface
+ . Maven plugin
+ . Ant task
+ . Jenkins plugin
+How it works?
+- Series of analyzers that inspect the project dependencies, collect pieces of information about the dependencies (evidence)
+- Use evidences to identify the Common Platform Enumeration (CPE) (naming schemes for information technology systems, software, and packages)
+- Show Common Vulnerabilities and Exposure (CVE) listing
+- Vulnerability feed: NVD Data Feeds hosted by NIST 
+
+Chef Inspec
+- Open source infrastructure testing framework
+- Define compliance, security and policy
+
+G (VSC) - J (JENKINS) - T (TOMCAT)
+
+Automating Compliance Check
+
+What about docker or kubernetes?
+How to make sure Docker environment or Kubernetes?
+Audit it
+Docker host
+- Docker bench
+- Dockscan
+- Amicontained
+
+Docker image
+- Docker linting 
+- Docker image vulnerability scanning
+
+Dockscan
+- Scans for security issues and vulnerabilities
+- Can scan local and remote docker
+
+Amicontained
+- Container introspection tool to find out container-runtime, apparmor, seccomp, capabilities information
+
+Dockerfile Linting
+- Dockerfile Linting is a process to check and modify the Dockerfile as per the industry's best practices
+- Tools to audit Dockerfiles for best practices and bad practices
+
+Dockerfilelint
+- Node module that analyzes a Dockerfile and looks for common traps, mistakes and helps enforce best practices
+
+CALIR
+- Static analyzer for finding vulnerabilities in application containers
+
+- Kube bench
+- Kube hunter
+
+DevSecOps Stages: Secret Management
+- Hardcoding secrests in deployed code is a bad idea
+- Keeping secrets in code base is also proven to be dangerous
+- Process of saving secrets in a secure storage service and accessing those whenever needed, is secrets management
+
+The secrets doesn't have to be managed from the code, they have to be managed by some other way. Secret Storage Services, they stores our secrets and our code can refer to this storage.
+
+Hashicorp Vault
+- open-source system to securely storing/accessing secrets
+- also supports encryption as a service
+
+But why Vault?
+- Moving secrets to one place (Vault)
+- Encrypted
+ . At rest
+ . In transit
+- Access Control is provided
+- Audit trail
+
+Efimeral Secrets: temporary secrets, issued with a expiry timeline
+
+But how Vault helps in application compromise
+
+- Temporary credentials to apps
+ . changes after some interval
+- Different tokens for every application/entity/user so easy to know point of compromise
+- Also, easy to revoke access selectively
+- Bad encryption prevented using Encryption as a service
+- Key management
+
+DevSecOps Stages: Vulnerabilitiy Management
+- Identifying the inventory
+- Using tools to perform security tests on the project to identify vulnerabilities and catalog the vulnerabilities
+- Tracking, patching/fixing the vulnerabilities 
+
+Archery
+- Opensource centralize vulnerability assessment and management for devsecops teams
+- Central point to arrange/list reports of other security tools
+
+Tracking, patching, managing all of these vulnerabilities, and all of this issue actually becomes a problem as soon as you try to scale up with the security tool 
+
+Gates means you have to meet some criteria to pass that phase, now these gates, if we use the term gates, will differ for all of these tools. For example, when we are using OWASP Dependency Check or if we are using some ACR tool, we can define which threshold we want to allow and threshold we don't want 
+
+GitHub
+- Hosted GIT repositories with access control
+- Free for public repositories and paid for private (after a limit)
+- Anyone can create account
+
+You want to have one controlling authority
+CI/CD Servers are for defining order
+The flow is defined by the user, and it is implemented by the CICD server.
+
+TRADITION CI/CD WITH GITHUB
+---------------------------
+DEVELOPER - CODE REPOSITORY - CI SERVER (PERFORM THE POOLING, YOU DEFINE THE TRIGGERS HERE) - IMAGE REGISTRY - DEPLOYMENT ON KUBERNETES
+ 
+CAN WE?
+DEVELOPER - CODE REPOSITORY/CI SERVER - DOCKER (IMAGE REGISTRY) - DEPLOYMENT ON KUBERNETES
+
+GitHub Actions
+- Automate software workflows
+- Build, test, and deploy
+- Code reviews, branch management, and issue
+
+How it works?
+Combination of GitHub Events (trigger) + Actions
+Events: An activity on Repo
+- Pull request
+- Commit
+- New contributor joining
+
+Actions: Defined by user in terms of workflows (collection of steps)
+
+For example, whenever something is being committed to the master branch, at that time, what I want is to run an action which will compile the code, build the code, package it and then deploy it
+
+Runner: it is the machine on which the build is going to run 
+
+.GitHub/workflows
+
+pre created action
+
+CI/CD: it only deals with building and deploying your software.
+Whereas these actions will even able to help you with some of the other actions that people perform on their GitHub repositories, for example, whenever a new ticket is issued or a new issue is created, you want to assign it to one of the contributors, right? So you can actually do that by using GitHub actions and feel free to explore these actions that are provided as default to learn more on it.
+
+Jobs in Jenkins, Stages in the GitLab GI actions or GitHub Actions
+
+So first thing is to create the DevSecOps pipeline because we are there yet. Once we have created it, after that, you can work on optimizing it, you can decide if you want to run all of the pipeline, all the time. Or if you only want to run a specific section, which is modified.
+Work on planning and developing and deploying the pipeline.
+
+GitHub's secret storage
+
+Concept of artifact comes into play: Every stage generally generates some artifacts, and we were supposed to protect it 
+
+Site Reliability Engineering: SRE
+
+Why not Jenkins?
+- Bootcamp is cloud focused hence our focus is on GitHub and Gitlab
+- Jenkins has tones of documents, examples, plugins etc
+- Hosting costs, managing security and ACI
+- Not suitable for smaller projects
+
+GitLab CI
+- Auto DevOps
+ . GitLab automatically tries to perform CI/CD with security 
+- Manual configuration
+ . Create .gitlab-ci.yml with instructions
+
+GitLab is a way more than a vcs.
+GitLab Runners
+- Servers for build process
+- Specific vs Shared Runners
+- GitLab - Runner - Container Registry - Kubernetes
+
+Secrets in GitLab builds:
+- GitLab variables
+
+GitLab: Artifacts
+
+GitLab template .gitlab-ci.yml
+
+- Security focused
+- Using existing security templates
+
+Gitlab + Kubernetes
+
+Push your artifacts, save them
+
+PADSOP
+- Pentester Academy DevSecOps Proffesional
+- Assignment basesd exam
+ . DevSecOps pipeline on GiHub Actions and GitLab CI
+-----------------------------------------------------------------------------------------------------
+- deployable package
+- binary
+- docker host
+
